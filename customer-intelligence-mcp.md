@@ -6,7 +6,7 @@ A company's first internal Model Context Protocol server. Python on AWS Bedrock 
 
 ## What it is
 
-An MCP server that puts the company's customer record in front of anyone who asks a question in natural language. Underneath it are three ETL pipelines feeding a Postgres and pgvector store: roughly 6,700 documents, 309,000 emails, and 12,000 deal outcomes.
+An MCP server that puts the company's customer record in front of anyone who asks a question in natural language. Underneath it are three ETL pipelines feeding a Postgres and pgvector store: thousands of documents, hundreds of thousands of emails, and thousands of deal outcomes.
 
 It fed three different appetites from one substrate. Product got voice-of-the-customer, revenue got win-loss, and the executive team got trend search.
 
