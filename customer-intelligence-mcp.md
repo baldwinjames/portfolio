@@ -28,7 +28,7 @@ This is the layer I would want to be asked about, because it is where the intere
 
 744 tests.
 
-39 distinct users, every one of them active within 30 days. The CEO was the heaviest user by a wide margin and out-used me roughly tenfold. I came ninth on my own tool, which I would rather report than hide, because a tool whose author is its main user has not been adopted.
+Adopted by 45% of the company inside 30 days, every one of them active. The CEO was the heaviest user by a wide margin. I came ninth on my own tool, which I would rather report than hide, because a tool whose author is its main user has not been adopted.
 
 ## Operations
 

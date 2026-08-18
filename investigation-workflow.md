@@ -20,7 +20,7 @@ It reads a companion codebase-architecture reference and live cloud infrastructu
 
 ## Design decisions that mattered
 
-**Built on a separate codebase-architecture skill rather than one monolith.** The map of the repository estate is its own artifact with its own validation, so each half can be versioned and tested independently. That map covers 229 repositories across 13 domains, 56 of them deep-read, and it carries zero unverified claims. Four senior platform engineers tested it and filled the gaps they found.
+**Built on a separate codebase-architecture skill rather than one monolith.** The map of the repository estate is its own artifact with its own validation, so each half can be versioned and tested independently. That map covers the full repository estate across more than a dozen domains, with the highest-traffic services deep-read, and it carries zero unverified claims. Four senior platform engineers tested it and filled the gaps they found.
 
 **Permission-aware degradation.** A support engineer without full system access still gets a completed investigation and a directed escalation rather than a failure. The escalation arrives at engineering with the work already done. This was the difference between a tool that helps the most senior person on the team and a tool that helps everyone.
 
