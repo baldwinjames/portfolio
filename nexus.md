@@ -26,12 +26,12 @@ Four phases, one loop. Sensing feeds reasoning, reasoning drives action, and wha
 
 ```mermaid
 flowchart LR
-    S["<b>SENSE</b><br/>5 engines watch"]
-    R["<b>REASON</b><br/>6 engines decide"]
-    A["<b>ACT</b><br/>2 engines do"]
-    L["<b>LEARN</b><br/>2 engines adjust"]
+    S["SENSE<br/>5 engines watch"]
+    R["REASON<br/>6 engines decide"]
+    A["ACT<br/>2 engines do"]
+    L["LEARN<br/>2 engines adjust"]
     S --> R --> A --> L
-    L -->|"raises the interrupt threshold"| R
+    L -->|"raises the bar"| R
 ```
 
 A sixteenth engine, the **NexusDaemon**, sits outside that cycle and keeps time for it: every five minutes it checks whether a briefing is due, a meeting is thirty minutes out, signals are stale, or autonomous tasks are ready.
@@ -48,14 +48,14 @@ The two diagrams below trace the paths that matter most: how a detected signal e
 ## How a signal becomes an interruption, or doesn't
 
 ```mermaid
-flowchart LR
-    SS["Signal Scanner<br/><i>adoption · KPI</i>"] --> CE["Correlation Engine<br/><i>BFS, 3 hops</i>"]
-    NOS["Native OS<br/><i>focus classification</i>"] --> GOV
-    CE --> GOV{"Governor<br/><i>focus state +<br/>learned tolerance</i>"}
-    GOV -->|"act now"| CA["Conversation Agent<br/><i>18 tools</i>"]
-    GOV -->|"queue / hold"| HOLD["suppressed"]
+flowchart TB
+    SS["Signal Scanner<br/>adoption and KPI anomalies"] --> CE["Correlation Engine<br/>BFS, 3 hops"]
+    CE --> GOV{"Governor"}
+    NOS["Native OS<br/>focus state"] --> GOV
+    GOV -->|"act now"| CA["Conversation Agent<br/>18 tools"]
+    GOV -->|"hold"| X["suppressed"]
     CA --> YOU(["You"])
-    YOU -->|"accepted · corrected · ignored"| LE["Learning Engine<br/><i>rules strengthen / decay</i>"]
+    YOU -->|"accepted or ignored"| LE["Learning Engine<br/>rules strengthen or decay"]
     LE -.->|"raises the bar"| GOV
 ```
 
@@ -70,14 +70,14 @@ The practical effect is that the threshold for interrupting you **rises over tim
 The second continuous cycle. Preparation happens before you arrive; digestion happens without you asking.
 
 ```mermaid
-flowchart LR
-    D["Daemon tick<br/><i>meeting in 30 min</i>"] --> PE["Persona Engine<br/><i>refresh stale profiles</i>"]
-    PE --> MPA["Meeting Prep Agent<br/><i>talking points · coaching · risks</i>"]
-    CX["Commitment Extractor<br/><i>open promises both ways</i>"] --> MPA
+flowchart TB
+    D["Daemon tick<br/>meeting in 30 min"] --> PE["Persona Engine<br/>refresh stale profiles"]
+    PE --> MPA["Meeting Prep Agent<br/>talking points and risks"]
+    CX["Commitment Extractor<br/>open promises"] --> MPA
     MPA --> M(["Meeting"])
-    M --> PMP["Post-Meeting Processor<br/><i>pulls transcript</i>"]
+    M --> PMP["Post-Meeting Processor<br/>pulls transcript"]
     PMP --> CX
-    PMP --> TSK["Tasks created<br/><i>from action items</i>"]
+    PMP --> TSK["Tasks created"]
 ```
 
 Thirty minutes out, attendee profiles are refreshed if stale and prep is assembled from personas, open commitments and project context. When the meeting ends the transcript is pulled and run through commitment extraction, signal extraction and persona enrichment, so the profiles used for the next meeting are already better than the ones used for this one.
@@ -87,20 +87,11 @@ Thirty minutes out, attendee profiles are refreshed if stale and prep is assembl
 ## Two models, split by what they are good at
 
 ```mermaid
-flowchart LR
-    IC["Instruction Compiler<br/><i>8 prioritised sections<br/>~2,000 tokens</i>"] -->|"at session start"| RT
-
-    subgraph SPEECH ["SPEECH"]
-        RT["OpenAI Realtime API<br/><i>speech-to-speech<br/>semantic VAD · barge-in</i>"]
-    end
-
-    subgraph REASONING ["REASONING"]
-        CL["Claude<br/><i>enrichment · prep<br/>analytics · execution</i>"]
-    end
-
-    RT -->|"tool call"| CL
+flowchart TB
+    IC["Instruction Compiler<br/>8 sections, ~2,000 tokens"] -->|"at session start"| RT
+    RT["OpenAI Realtime API<br/>speech-to-speech, barge-in"] -->|"tool call"| CL["Claude<br/>enrichment, prep, execution"]
     CL -->|"structured result"| RT
-    CL --> ENG["15 engines<br/><i>persona · commitments<br/>signals · tasks</i>"]
+    CL --> ENG["15 engines<br/>persona, commitments, signals"]
 ```
 
 Speech-to-speech is where you want the conversation, not the thinking. The Realtime API holds the turn and keeps the voice natural over a WebSocket, while Claude reasons behind exposed tool definitions. Async function calling means the voice can keep talking through work that takes seconds.
