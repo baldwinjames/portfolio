@@ -2,8 +2,6 @@
 
 **A voice-first AI chief of staff.** Fifteen intelligence engines running continuously over calendar, meetings, colleagues, projects and commitments, deciding what actually needs a person and staying quiet about everything else.
 
-`Personal R&D` · `single user` · `March – July 2026` · `frozen at a written gate`
-
 | Intelligence engines | Backend services | Tests at freeze | Process-context layers |
 |:--:|:--:|:--:|:--:|
 | **15** | **93** | **~3,982** | **6** |
