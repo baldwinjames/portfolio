@@ -8,7 +8,7 @@ I ran global customer support organizations for thirteen years. In October 2025 
 
 | System | What it is | Where the evidence is |
 |---|---|---|
-| [Sincta](./sincta.md) | Privacy-first on-device dictation for macOS. Electron over two native Swift bridges. Replaces a commercial cloud tool with one that has no network path. | [Public repository](https://github.com/baldwinjames/sincta): commit history, nine architecture decision records, committed benchmark JSON, 86 written-up defects |
+| [Sincta](./sincta.md) | Privacy-first on-device dictation for macOS. Electron over two native Swift bridges. Replaces a commercial cloud tool with one that has no network path. | Commit history, nine architecture decision records, committed benchmark JSON, 86 written-up defects. Source is private. |
 | [Nexus](./nexus.md) | A voice-first AI chief of staff. Layered agents over a 93-module backend, with speech on OpenAI's Realtime API and reasoning on Claude. | ~3,982 tests and per-agent eval suites. Personal R&D, single user. |
 | [Investigation workflow](./investigation-workflow.md) | An agentic workflow running the full Tier 2 support lifecycle: route, map the codebase, pull logs, check infrastructure, reach a root cause. | Benchmarked and engineering-validated. Source is private. |
 | [Customer Intelligence MCP](./customer-intelligence-mcp.md) | A company's first internal MCP server. Python on AWS Bedrock AgentCore behind Cognito OAuth and PKCE. | 744 tests, adopted by 45% of the company inside 30 days. Source is private. |

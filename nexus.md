@@ -2,7 +2,7 @@
 
 A voice-first AI chief of staff for macOS. An autonomous operator watching calendar, relationships, commitments and a fleet of background agents, holding enough context to work out what actually needs a person, and surfacing only that: a draft to approve, a call to prepare for, someone to contact.
 
-**Personal R&D, single user.** March to July 2026.
+**Personal R&D, single user.** March to July 2026. Source is private.
 
 ## The problem it was built for
 
@@ -20,7 +20,7 @@ Local-only storage is a hard rule, not a setting. Every behavioural record stays
 
 The original voice pipeline was speech-to-text, then Claude, then text-to-speech. It worked and it felt like a pipeline rather than a conversation. The gold standard is speech-to-speech in a single model, where the pauses land where a person would put them.
 
-The problem is that speech-to-speech models are not where you want your reasoning to happen. So [ADR-003](https://github.com/baldwinjames/nexus-extension) records a dual-model architecture instead:
+The problem is that speech-to-speech models are not where you want your reasoning to happen. So ADR-003 records a dual-model architecture instead:
 
 **OpenAI's Realtime API as the voice layer.** Speech-to-speech over WebSocket, handling conversation, greetings, follow-ups and reading results back. Semantic voice-activity detection for turn-taking rather than a fixed silence timeout, with eagerness tuned per context because a briefing and a rapid command need different patience.
 
