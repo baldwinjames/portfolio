@@ -22,77 +22,28 @@ Nexus inverts it. Every engine below exists to earn the right to interrupt. Sign
 
 ## The system
 
-Four phases, one loop. Solid edges are wired and running. The dashed pair is built and not connected, which is covered honestly further down.
+Four phases, one loop. Sensing feeds reasoning, reasoning drives action, and what you do with the result feeds back to raise or lower the bar for interrupting you again.
 
 ```mermaid
-flowchart TB
-    DAEMON["NexusDaemon<br/><i>5-min heartbeat</i>"]
-
-    subgraph SENSE ["SENSE"]
-        direction TB
-        SS["Signal Scanner"]
-        NOS["Native OS Intelligence"]
-        PMP["Post-Meeting Processor"]
-        PE["Persona Engine"]
-        CX["Commitment Extractor"]
-    end
-
-    subgraph REASON ["REASON"]
-        direction TB
-        CE["Correlation Engine"]
-        GOV["Governor"]
-        MPA["Meeting Prep Agent"]
-        TIA["Task Intelligence Agent"]
-        BA["Briefing Agent"]
-        CA["Conversation Agent"]
-    end
-
-    subgraph ACT ["ACT"]
-        direction TB
-        EO["Execution Orchestrator"]
-        IC["Instruction Compiler"]
-    end
-
-    subgraph LEARN ["LEARN"]
-        direction TB
-        AI["Adaptive Intelligence"]
-        MEM["MemRL"]
-    end
-
-    DAEMON --> SS
-    DAEMON --> BA
-    DAEMON --> MPA
-    DAEMON --> EO
-    DAEMON --> PMP
-
-    SS --> CE
-    CE --> GOV
-    NOS --> GOV
-    GOV --> CA
-
-    NOS --> PE
-    PMP --> PE
-    PMP --> CX
-    PMP --> TIA
-    PE --> MPA
-    CX --> MPA
-    MPA --> CA
-    BA --> CA
-    TIA --> EO
-    TIA --> BA
-
-    CA --> AI
-    AI --> GOV
-    AI --> IC
-    IC --> CA
-    CA -.-> MEM
-    MEM -.-> CA
+flowchart LR
+    S["<b>SENSE</b><br/>5 engines watch"]
+    R["<b>REASON</b><br/>6 engines decide"]
+    A["<b>ACT</b><br/>2 engines do"]
+    L["<b>LEARN</b><br/>2 engines adjust"]
+    S --> R --> A --> L
+    L -->|"raises the interrupt threshold"| R
 ```
 
-> [!NOTE]
-> An interactive version of this map, where each engine opens its own detail, is linked at the bottom of this page.
+A sixteenth engine, the **NexusDaemon**, sits outside that cycle and keeps time for it: every five minutes it checks whether a briefing is due, a meeting is thirty minutes out, signals are stale, or autonomous tasks are ready.
 
----
+| Phase | Engines |
+|---|---|
+| **Sense** | Signal Scanner · Native OS Intelligence · Persona Engine · Commitment Extractor · Post-Meeting Processor |
+| **Reason** | Correlation Engine · Governor · Conversation Agent · Briefing Agent · Meeting Prep Agent · Task Intelligence Agent |
+| **Act** | Execution Orchestrator · Instruction Compiler |
+| **Learn** | Adaptive Intelligence · MemRL |
+
+The two diagrams below trace the paths that matter most: how a detected signal either reaches you or doesn't, and how a meeting is prepared for and then digested.
 
 ## How a signal becomes an interruption, or doesn't
 
@@ -111,6 +62,25 @@ flowchart LR
 The loop closes on the Governor. Every time a surfaced signal is accepted, corrected or ignored, a confidence-scored rule is created or adjusted. Rules that get reinforced become permanent preferences; rules that get contradicted decay and deactivate.
 
 The practical effect is that the threshold for interrupting you **rises over time** on the signal types you have shown you do not care about.
+
+---
+
+## The meeting loop
+
+The second continuous cycle. Preparation happens before you arrive; digestion happens without you asking.
+
+```mermaid
+flowchart LR
+    D["Daemon tick<br/><i>meeting in 30 min</i>"] --> PE["Persona Engine<br/><i>refresh stale profiles</i>"]
+    PE --> MPA["Meeting Prep Agent<br/><i>talking points · coaching · risks</i>"]
+    CX["Commitment Extractor<br/><i>open promises both ways</i>"] --> MPA
+    MPA --> M(["Meeting"])
+    M --> PMP["Post-Meeting Processor<br/><i>pulls transcript</i>"]
+    PMP --> CX
+    PMP --> TSK["Tasks created<br/><i>from action items</i>"]
+```
+
+Thirty minutes out, attendee profiles are refreshed if stale and prep is assembled from personas, open commitments and project context. When the meeting ends the transcript is pulled and run through commitment extraction, signal extraction and persona enrichment, so the profiles used for the next meeting are already better than the ones used for this one.
 
 ---
 
@@ -222,14 +192,14 @@ At voice session start, queries every intelligence component for learned rules, 
 </details>
 
 <details>
-<summary><b>LEARN</b> — two engines that improve, one of which is not plugged in</summary>
+<summary><b>LEARN</b> — two engines that improve</summary>
 
 <br/>
 
 **Adaptive Intelligence** · *Built, 9 service files*
 Three parts. The learning engine turns every correction into a confidence-scored rule that strengthens on reinforcement and decays on contradiction. The signal cortex scores cross-system events for urgency without API calls. The instruction compiler assembles the result into live context.
 
-**MemRL** · *Built but NOT wired into prompt assembly*
+**MemRL** · *Built, not yet wired into prompt assembly*
 Stores every output as a trajectory with a Q-value that rises on acceptance and falls on neglect. High scorers become exemplars, low scorers get pruned. Scoring, promotion, pruning and feedback logging are all implemented.
 
 </details>
@@ -246,16 +216,11 @@ A five-minute heartbeat that checks whether a briefing is due, a meeting is 30 m
 
 ---
 
-## Honest status
+## Status
 
-> [!WARNING]
-> **One engine is built and not plugged in.**
->
-> MemRL stores every output as a trajectory with a Q-value that rises when you accept it and falls when you ignore it. High scorers get promoted to exemplars, low scorers get pruned. Q-value updates, promotion, pruning and feedback logging are all implemented and tested.
->
-> The integration point into the conversation agent's prompt assembly does not exist. Trajectories are scored and stored and never injected into Claude's context. It is the single highest-leverage improvement available to the project and it is not done.
+Frozen deliberately in July 2026 at a written gate, with a handoff covering current state, remaining work, and the decisions that must not be casually reversed, so another engineer or agent could resume it cold. It stopped because it had answered the question it was built to answer.
 
-The project was frozen deliberately in July 2026 at a written gate, with a handoff covering current state, remaining work, and the decisions that must not be casually reversed, so another engineer or agent could resume it cold. It stopped because it had answered the question it was built to answer.
+Next on the list: **MemRL** is scoped, built and tested, but its integration into the conversation agent's prompt assembly is not wired in yet.
 
 ---
 
