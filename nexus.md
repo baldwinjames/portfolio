@@ -24,15 +24,10 @@ Nexus inverts it. Every engine below exists to earn the right to interrupt. Sign
 
 Four phases, one loop. Sensing feeds reasoning, reasoning drives action, and what you do with the result feeds back to raise or lower the bar for interrupting you again.
 
-```mermaid
-flowchart LR
-    S["SENSE<br/>5 engines watch"]
-    R["REASON<br/>6 engines decide"]
-    A["ACT<br/>2 engines do"]
-    L["LEARN<br/>2 engines adjust"]
-    S --> R --> A --> L
-    L -->|"raises the bar"| R
-```
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="diagrams/nexus-phases-dark.svg">
+  <img alt="The four-phase intelligence cycle: sense feeds reason, reason drives act, act feeds learn, and learn raises the interrupt threshold back at reason." src="diagrams/nexus-phases-light.svg">
+</picture>
 
 A sixteenth engine, the **NexusDaemon**, sits outside that cycle and keeps time for it: every five minutes it checks whether a briefing is due, a meeting is thirty minutes out, signals are stale, or autonomous tasks are ready.
 
@@ -47,17 +42,10 @@ The two diagrams below trace the paths that matter most: how a detected signal e
 
 ## How a signal becomes an interruption, or doesn't
 
-```mermaid
-flowchart TB
-    SS["Signal Scanner<br/>adoption and KPI anomalies"] --> CE["Correlation Engine<br/>BFS, 3 hops"]
-    CE --> GOV{"Governor"}
-    NOS["Native OS<br/>focus state"] --> GOV
-    GOV -->|"act now"| CA["Conversation Agent<br/>18 tools"]
-    GOV -->|"hold"| X["suppressed"]
-    CA --> YOU(["You"])
-    YOU -->|"accepted or ignored"| LE["Learning Engine<br/>rules strengthen or decay"]
-    LE -.->|"raises the bar"| GOV
-```
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="diagrams/nexus-signal-dark.svg">
+  <img alt="How a detected signal passes through correlation and the Governor to either reach you or be suppressed, with the learning loop feeding back." src="diagrams/nexus-signal-light.svg">
+</picture>
 
 The loop closes on the Governor. Every time a surfaced signal is accepted, corrected or ignored, a confidence-scored rule is created or adjusted. Rules that get reinforced become permanent preferences; rules that get contradicted decay and deactivate.
 
@@ -69,16 +57,10 @@ The practical effect is that the threshold for interrupting you **rises over tim
 
 The second continuous cycle. Preparation happens before you arrive; digestion happens without you asking.
 
-```mermaid
-flowchart TB
-    D["Daemon tick<br/>meeting in 30 min"] --> PE["Persona Engine<br/>refresh stale profiles"]
-    PE --> MPA["Meeting Prep Agent<br/>talking points and risks"]
-    CX["Commitment Extractor<br/>open promises"] --> MPA
-    MPA --> M(["Meeting"])
-    M --> PMP["Post-Meeting Processor<br/>pulls transcript"]
-    PMP --> CX
-    PMP --> TSK["Tasks created"]
-```
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="diagrams/nexus-meeting-dark.svg">
+  <img alt="The meeting loop: daemon tick, persona refresh, meeting prep, then post-meeting transcript processing feeding commitments and tasks." src="diagrams/nexus-meeting-light.svg">
+</picture>
 
 Thirty minutes out, attendee profiles are refreshed if stale and prep is assembled from personas, open commitments and project context. When the meeting ends the transcript is pulled and run through commitment extraction, signal extraction and persona enrichment, so the profiles used for the next meeting are already better than the ones used for this one.
 
@@ -86,13 +68,10 @@ Thirty minutes out, attendee profiles are refreshed if stale and prep is assembl
 
 ## Two models, split by what they are good at
 
-```mermaid
-flowchart TB
-    IC["Instruction Compiler<br/>8 sections, ~2,000 tokens"] -->|"at session start"| RT
-    RT["OpenAI Realtime API<br/>speech-to-speech, barge-in"] -->|"tool call"| CL["Claude<br/>enrichment, prep, execution"]
-    CL -->|"structured result"| RT
-    CL --> ENG["15 engines<br/>persona, commitments, signals"]
-```
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="diagrams/nexus-voice-dark.svg">
+  <img alt="The dual-model voice architecture: the instruction compiler seeds the OpenAI Realtime session, which calls Claude for reasoning." src="diagrams/nexus-voice-light.svg">
+</picture>
 
 Speech-to-speech is where you want the conversation, not the thinking. The Realtime API holds the turn and keeps the voice natural over a WebSocket, while Claude reasons behind exposed tool definitions. Async function calling means the voice can keep talking through work that takes seconds.
 
