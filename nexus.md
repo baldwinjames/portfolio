@@ -20,7 +20,7 @@ Local-only storage is a hard rule, not a setting. Every behavioural record stays
 
 The original voice pipeline was speech-to-text, then Claude, then text-to-speech. It worked and it felt like a pipeline rather than a conversation. The gold standard is speech-to-speech in a single model, where the pauses land where a person would put them.
 
-The problem is that speech-to-speech models are not where you want your reasoning to happen. So ADR-003 records a dual-model architecture instead:
+The problem is that speech-to-speech models are not where you want your reasoning to happen. So I split it in two instead:
 
 **OpenAI's Realtime API as the voice layer.** Speech-to-speech over WebSocket, handling conversation, greetings, follow-ups and reading results back. Semantic voice-activity detection for turn-taking rather than a fixed silence timeout, with eagerness tuned per context because a briefing and a rapid command need different patience.
 

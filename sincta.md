@@ -24,7 +24,7 @@ Both bridges are load-bearing. If either fails to build or package correctly, th
 
 ## What is measured
 
-Every number below came out of a bench script in the repo, and the raw JSON is committed alongside it.
+Every number below came out of a bench script, with the raw JSON committed alongside the code that produced it.
 
 | Gate | Result | Budget |
 |---|---|---|
@@ -40,21 +40,21 @@ The benches refuse to run while a routable network interface is up. A latency or
 
 ## Decisions worth reading
 
-Nine architecture decision records live in the repo. Three are worth pulling out.
+The project carries nine architecture decision records. Three are worth pulling out.
 
-**Choosing the speech engine** (`wiki/decisions/0001-stt-engine-choice.md`). I ported the speech code from an earlier personal project, and before porting anything I audited what that project had actually done with each path rather than assuming it worked. Several were broken, unmeasured, or dead. One module, `DictationTranscriber`, was documented as the right tool for dictation and had never been wired up. Apple's newer `SpeechAnalyzer` path was gated behind an environment flag and marked disabled until stable. The newer module was not the better module, and the only way to know was to go and look.
+**Choosing the speech engine.** I ported the speech code from an earlier personal project, and before porting anything I audited what that project had actually done with each path rather than assuming it worked. Several were broken, unmeasured, or dead. One module, `DictationTranscriber`, was documented as the right tool for dictation and had never been wired up. Apple's newer `SpeechAnalyzer` path was gated behind an environment flag and marked disabled until stable. The newer module was not the better module, and the only way to know was to go and look.
 
-**Where the paste goes** (`wiki/decisions/0003-paste-target-capture.md`). The transcript pastes into the app that was frontmost when dictation started, not whatever is frontmost when the paste fires. Those were the same thing until the recording indicator became clickable, at which point clicking it made the indicator the frontmost app and it quietly ate the paste. The fix was to capture the target at the start.
+**Where the paste goes.** The transcript pastes into the app that was frontmost when dictation started, not whatever is frontmost when the paste fires. Those were the same thing until the recording indicator became clickable, at which point clicking it made the indicator the frontmost app and it quietly ate the paste. The fix was to capture the target at the start.
 
-**Accepting a latency number that missed its target** (`wiki/decisions/0005-stopflushms-360-acceptance.md`). The original target was a median strictly under 500ms. 532 misses it. I accepted the value and stopped the tuning ladder at its first rung, and wrote down why: every gate other than the strict median line came back clean, and pushing lower would have spent real headroom out of the revision-tolerance budget chasing a threshold that was a judgment call in the first place. The ADR records the target as revised rather than met.
+**Accepting a latency number that missed its target.** The original target was a median strictly under 500ms. 532 misses it. I accepted the value and stopped the tuning ladder at its first rung, and wrote down why: every gate other than the strict median line came back clean, and pushing lower would have spent real headroom out of the revision-tolerance budget chasing a threshold that was a judgment call in the first place. The ADR records the target as revised rather than met.
 
 I would rather ship a documented miss than a met target nobody can reproduce.
 
 ## How the work gets done
 
-Every phase sits behind a written gate with attested evidence, and every defect I find gets written up in `wiki/learnings.md` with its mechanism and a rule taken from it. There are 86 so far.
+Every phase sits behind a written gate with attested evidence, and every defect I find gets written up with its mechanism and a rule taken from it. There are 86 so far.
 
-That file is not a bug list. The interesting part is almost never the defect. It is why the thing that was supposed to catch it did not. Four examples of what that turns up:
+That log is not a bug list. The interesting part is almost never the defect. It is why the thing that was supposed to catch it did not. Four examples of what that turns up:
 
 **A tuning session that measured nothing.** The task was to find the lowest safe flush window. The first sitting produced two clean populations of latency data, one at the default and one at the candidate value. Both passed. Both were worthless: the function constructing the native engine passed no arguments, so the addon's own constructor default decided the setting regardless of the config file. Both populations had measured the same pinned default. Nothing errored, nothing warned, and the numbers were plausible. The fix added a readback line logging what the bridge was actually configured with, because the failure was invisible by construction.
 
