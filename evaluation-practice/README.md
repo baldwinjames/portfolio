@@ -42,7 +42,7 @@ I would rather have that on the record than a faster ship date. The whole appara
 
 The failure I keep meeting is not a bad result. It is a good result from a broken instrument, and it never announces itself.
 
-A tuning session on a personal project ran two clean populations of latency data before I noticed the configuration had never reached the component being configured. Both populations had measured the same pinned default. Nothing errored. Nothing warned. The numbers were plausible. ([Full account here.](./sincta.md#the-tuning-session-that-found-a-defect-instead))
+A tuning session on a personal project ran two clean populations of latency data before I noticed the configuration had never reached the component being configured. Both populations had measured the same pinned default. Nothing errored. Nothing warned. The numbers were plausible. ([Full account here.](../sincta/#how-the-work-gets-done))
 
 From the same project, written down after meeting each one:
 

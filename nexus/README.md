@@ -23,8 +23,8 @@ Nexus inverts it. Every engine below exists to earn the right to interrupt. Sign
 Four phases, one loop. Sensing feeds reasoning, reasoning drives action, and what you do with the result feeds back to raise or lower the bar for interrupting you again.
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="diagrams/nexus-phases-dark-v2.svg">
-  <img width="680" alt="The four-phase intelligence cycle: sense feeds reason, reason drives act, act feeds learn, and learn raises the interrupt threshold back at reason." src="diagrams/nexus-phases-light-v2.svg">
+  <source media="(prefers-color-scheme: dark)" srcset="diagrams/phases-dark.svg">
+  <img width="680" alt="The four-phase intelligence cycle: sense feeds reason, reason drives act, act feeds learn, and learn raises the interrupt threshold back at reason." src="diagrams/phases-light.svg">
 </picture>
 
 A sixteenth engine, the **NexusDaemon**, sits outside that cycle and keeps time for it: every five minutes it checks whether a briefing is due, a meeting is thirty minutes out, signals are stale, or autonomous tasks are ready.
@@ -41,8 +41,8 @@ The two diagrams below trace the paths that matter most: how a detected signal e
 ## How a signal becomes an interruption, or doesn't
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="diagrams/nexus-signal-dark-v2.svg">
-  <img width="360" alt="How a detected signal passes through correlation and the Governor to either reach you or be suppressed, with the learning loop feeding back." src="diagrams/nexus-signal-light-v2.svg">
+  <source media="(prefers-color-scheme: dark)" srcset="diagrams/signal-dark.svg">
+  <img width="360" alt="How a detected signal passes through correlation and the Governor to either reach you or be suppressed, with the learning loop feeding back." src="diagrams/signal-light.svg">
 </picture>
 
 The loop closes on the Governor. Every time a surfaced signal is accepted, corrected or ignored, a confidence-scored rule is created or adjusted. Rules that get reinforced become permanent preferences; rules that get contradicted decay and deactivate.
@@ -56,8 +56,8 @@ The practical effect is that the threshold for interrupting you **rises over tim
 The second continuous cycle. Preparation happens before you arrive; digestion happens without you asking.
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="diagrams/nexus-meeting-dark-v2.svg">
-  <img width="360" alt="The meeting loop: daemon tick, persona refresh, meeting prep, then post-meeting transcript processing feeding commitments and tasks." src="diagrams/nexus-meeting-light-v2.svg">
+  <source media="(prefers-color-scheme: dark)" srcset="diagrams/meeting-dark.svg">
+  <img width="360" alt="The meeting loop: daemon tick, persona refresh, meeting prep, then post-meeting transcript processing feeding commitments and tasks." src="diagrams/meeting-light.svg">
 </picture>
 
 Thirty minutes out, attendee profiles are refreshed if stale and prep is assembled from personas, open commitments and project context. When the meeting ends the transcript is pulled and run through commitment extraction, signal extraction and persona enrichment, so the profiles used for the next meeting are already better than the ones used for this one.
@@ -67,8 +67,8 @@ Thirty minutes out, attendee profiles are refreshed if stale and prep is assembl
 ## Two models, split by what they are good at
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="diagrams/nexus-voice-dark-v2.svg">
-  <img width="230" alt="The dual-model voice architecture: the instruction compiler seeds the OpenAI Realtime session, which calls Claude for reasoning." src="diagrams/nexus-voice-light-v2.svg">
+  <source media="(prefers-color-scheme: dark)" srcset="diagrams/voice-dark.svg">
+  <img width="230" alt="The dual-model voice architecture: the instruction compiler seeds the OpenAI Realtime session, which calls Claude for reasoning." src="diagrams/voice-light.svg">
 </picture>
 
 Speech-to-speech is where you want the conversation, not the thinking. The Realtime API holds the turn and keeps the voice natural over a WebSocket, while Claude reasons behind exposed tool definitions. Async function calling means the voice can keep talking through work that takes seconds.
