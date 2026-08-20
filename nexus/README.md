@@ -1,6 +1,6 @@
 # Nexus
 
-**A voice-first AI chief of staff.** Fifteen intelligence engines running continuously over calendar, meetings, colleagues, projects and commitments, deciding what actually needs a person and staying quiet about everything else.
+**A voice-first AI chief of staff.** Fifteen intelligence engines running continuously over calendar, meetings, colleagues, projects and commitments, deciding what needs a person and staying quiet about everything else.
 
 | Intelligence engines | Backend services | Tests at freeze | Process-context layers |
 |:--:|:--:|:--:|:--:|
@@ -77,7 +77,7 @@ Measured cost of the split, written down rather than assumed:
 
 | Constraint | Measured |
 |---|---|
-| Added latency on complex queries | 800 – 2,000 ms |
+| Added latency on complex queries | 800 to 2,000 ms |
 | Session length | Hard limit, no automatic reconnection |
 
 ---
@@ -89,7 +89,7 @@ The screen follows the conversation. Ask about a person and People appears; make
 | View | What it holds |
 |---|---|
 | **Home** | Morning briefing, today's plan with readiness scores, blocked decisions, active signals |
-| **Calendar** | Per-meeting preparation scored 0–100%, with talking points and open commitments per attendee |
+| **Calendar** | Per-meeting preparation scored 0 to 100%, with talking points and open commitments per attendee |
 | **People** | Colleague profiles with relationship health, communication style, and an epistemic grade from A to F |
 | **Projects** | Roadmap and consulting portfolios with health, execution state and QBR readiness |
 | **Analytics** | Adoption and impact metrics as conversational insights, every number drillable |
@@ -100,7 +100,7 @@ The screen follows the conversation. Ask about a person and People appears; make
 ## Every engine
 
 <details>
-<summary><b>SENSE</b> — five engines that watch</summary>
+<summary><b>SENSE</b>, five engines that watch</summary>
 
 <br/>
 
@@ -111,7 +111,7 @@ Watches adoption metrics and KPI data for anomalies: adoption drops, usage spike
 Observes apps, focus, processes and screen at the OS level, then classifies focus state on a five-minute sliding window. This is what tells the Governor whether you are in deep work.
 
 **Persona Engine** · *Built, multi-source enrichment*
-Builds a profile of every colleague from meeting transcripts, Slack, Confluence, calendar and native observation. Tracks communication style, decision patterns, relationship health, and an epistemic grade from A to F for how well it actually understands them.
+Builds a profile of every colleague from meeting transcripts, Slack, Confluence, calendar and native observation. Tracks communication style, decision patterns, relationship health, and an epistemic grade from A to F for how well it understands them.
 
 **Commitment Extractor** · *Built, deadline tracking*
 Reads meeting transcripts for mutual commitments, both what you promised and what was promised to you, with explicit or inferred deadlines. Overdue items surface in briefings and meeting prep on their own.
@@ -122,7 +122,7 @@ On meeting end, pulls the transcript and runs commitment extraction, signal extr
 </details>
 
 <details>
-<summary><b>REASON</b> — six engines that decide</summary>
+<summary><b>REASON</b>, six engines that decide</summary>
 
 <br/>
 
@@ -147,7 +147,7 @@ Enriches each task with context from Notion, Confluence, transcripts and project
 </details>
 
 <details>
-<summary><b>ACT</b> — two engines that do</summary>
+<summary><b>ACT</b>, two engines that do</summary>
 
 <br/>
 
@@ -160,7 +160,7 @@ At voice session start, queries every intelligence component for learned rules, 
 </details>
 
 <details>
-<summary><b>LEARN</b> — two engines that improve</summary>
+<summary><b>LEARN</b>, two engines that improve</summary>
 
 <br/>
 
@@ -173,7 +173,7 @@ Stores every output as a trajectory with a Q-value that rises on acceptance and 
 </details>
 
 <details>
-<summary><b>NexusDaemon</b> — the heartbeat</summary>
+<summary><b>NexusDaemon</b>, the heartbeat</summary>
 
 <br/>
 

@@ -8,7 +8,7 @@ I ran global customer support organizations for thirteen years. In October 2025 
 
 | System | What it is | Where the evidence is |
 |---|---|---|
-| [Nexus](./nexus/) | A voice-first AI chief of staff. Fifteen intelligence engines across six process-context layers, deciding what actually needs a person and suppressing the rest. Speech on OpenAI's Realtime API, reasoning on Claude. | ~3,982 tests, per-agent evaluation suites, 93 backend services. Personal R&D, single user. |
+| [Nexus](./nexus/) | A voice-first AI chief of staff. Fifteen intelligence engines across six process-context layers, deciding what needs a person and suppressing the rest. Speech on OpenAI's Realtime API, reasoning on Claude. | ~3,982 tests, per-agent evaluation suites, 93 backend services. Personal R&D, single user. |
 | [Sincta](./sincta/) | Privacy-first on-device dictation for macOS. Electron over two native Swift bridges. Replaces a commercial cloud tool with one that has no network path at all. | Nine decision records, committed benchmark JSON, ten gated phases, and every defect written up with its mechanism. Source is private. |
 | [Investigation workflow](./investigation-workflow/) | An agentic workflow running the full Tier 2 support lifecycle: route, map the codebase, pull logs, check infrastructure, reach a root cause. | 91% routing match across a 50-ticket benchmark, zero misroutes. Validated by the VP of Engineering. Source is private. |
 | [Customer Intelligence MCP](./customer-intelligence-mcp/) | A company's first internal MCP server. Python on AWS Bedrock AgentCore behind Cognito OAuth and PKCE. | 744 tests. 39 colleagues using it, every one active in the last 30 days. Source is private. |
