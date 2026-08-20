@@ -18,6 +18,35 @@ The support engineers were capable of the reasoning. What they lacked was the ma
 
 ---
 
+## What I got right, and how I found it
+
+The interesting part of this project was not the agent. It was working out that the bottleneck was never the reasoning.
+
+Support engineers could reason about these tickets fine. They could not see the code and they could not see the logs, so most of that thirty minutes went into assembling context rather than thinking. Once that was clear, the design question stopped being "how do I make an agent that debugs" and became "how do I get the context in front of the person."
+
+Everything else on this page follows from that reframe, including the part where an engineer without access still gets a finished investigation.
+
+**The second lesson was about where accuracy comes from.** The benchmark sat at 70% and my instinct was to rewrite the prompt. That instinct was wrong. Instead I made the agent tag every claim it had grounded in code it had opened and read, then watched the count of those tags go from 28 to 68 across the benchmark. The score went to 91%.
+
+The agent had been asserting things about a codebase it had not looked at. Making that visible in its own output, so it could be counted, is what fixed it. When an agent underperforms the reflex is to reach for the wording, and the wording is usually not the problem.
+
+---
+
+## When the access is not there
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="diagrams/access-dark.svg">
+  <img width="580" alt="Permission-aware degradation: an engineer with the access gets a root cause and a fix, and an engineer without it still gets a completed investigation and an escalation that arrives with the work already done." src="diagrams/access-light.svg">
+</picture>
+
+A support engineer without full system access still gets a completed investigation and a directed escalation rather than a failure. The escalation lands on an engineer's desk with the work already done.
+
+That was the difference between a tool that helps the most senior person on the team and a tool that helps everyone. It is the design decision I am most confident was right.
+
+One system's access was confirmed unobtainable. Rather than keep tuning against a wall, I recorded the workflow as at its ceiling and named the reason. Somebody reading that benchmark a year later needs to know whether they are looking at an access limit or a skill deficiency, and those two things degrade very differently over time.
+
+---
+
 ## The lifecycle
 
 <picture>
@@ -43,29 +72,6 @@ State those separately and never collapse them. The 91% is the operationally use
 
 ---
 
-## Where the 21 points came from
-
-Not a prompt rewrite. I made the agent tag every claim it had grounded in code it had opened and read, then watched the count of those tags go from 28 to 68 across the benchmark.
-
-The gain came from verifying code rather than writing better prose about it. That is worth saying plainly, because the instinct when an agent underperforms is to reach for the wording, and the wording was not what was wrong. The agent was asserting things about a codebase it had not looked at, and the fix was to make that visible in its own output so it could be counted.
-
----
-
-## When the access is not there
-
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="diagrams/access-dark.svg">
-  <img width="580" alt="Permission-aware degradation: an engineer with the access gets a root cause and a fix, and an engineer without it still gets a completed investigation and an escalation that arrives with the work already done." src="diagrams/access-light.svg">
-</picture>
-
-A support engineer without full system access still gets a completed investigation and a directed escalation rather than a failure. The escalation lands on an engineer's desk with the work already done.
-
-That was the difference between a tool that helps the most senior person on the team and a tool that helps everyone. It is the design decision I am most confident was right.
-
-One system's access was confirmed unobtainable. Rather than keep tuning against a wall, I recorded the workflow as at its ceiling and named the reason. Somebody reading that benchmark a year later needs to know whether they are looking at an access limit or a skill deficiency, and those two things degrade very differently over time.
-
----
-
 ## The map it stands on
 
 <picture>
@@ -86,16 +92,6 @@ For someone who is not writing code every day, that is the only defensible bar f
 Distributed company-wide through managed settings, to the Tier 2 engineering group. Validated by the VP of Engineering and three senior engineers.
 
 One engineer took it as the foundation for an agent of his own. That is the adoption signal I trust most, because nobody builds on a tool they had to be told to use.
-
----
-
-## What I would tell you in an interview
-
-The interesting part of this project was not the agent. It was working out that the bottleneck was never the reasoning.
-
-Support engineers could reason about these tickets fine. They could not see the code and they could not see the logs, so most of that thirty minutes went into assembling context rather than thinking. Once that was clear, the design question stopped being "how do I make an agent that debugs" and became "how do I get the context in front of the person."
-
-Everything else on this page follows from that reframe, including the part where an engineer without access still gets a finished investigation.
 
 ---
 

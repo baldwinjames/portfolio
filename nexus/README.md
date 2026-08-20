@@ -18,6 +18,54 @@ Nexus inverts it. Every engine below exists to earn the right to interrupt. Sign
 
 ---
 
+## Why I built it
+
+I wanted a tool that made me better at my own job in every way I could measure, and I wanted to find out how far AI could be pushed at the time I was building. Those turned out to be the same project.
+
+What I wanted from it, concretely. Hand a piece of work straight to an agent and have it come back done. Keep track of every project and every task without me maintaining a list. Watch the relationships I am responsible for and tell me when one needs attention. Know enough about my day to judge what deserves my time.
+
+Nexus has one user and it is me. It was never a business and nobody else runs it. It is the deepest build I have done, and it is where I go to find the edge of what is possible.
+
+---
+
+## How I built it
+
+Every component had to clear a bar before I would move on from it, and the bar was written down rather than felt.
+
+| Level | The question | Verdict |
+|---|---|---|
+| **L1** | Does it just show data? | Fail |
+| **L2** | Does it tell me what it means and what to do? | Table stakes |
+| **L3** | Does it cross-reference, predict, synthesize and act? | The ceiling |
+
+Then one more pass after L3: what would blow me away, and what have I not thought of?
+
+The standing instruction to the model was to treat my ideas as the minimum and push past what I could come up with on my own. That is the whole method. Left alone, a model converges fast on something that works, and something that works is the enemy here. Every deep push on the earlier Chrome extension version optimized inside Chrome's constraints rather than asking whether Chrome was the right platform. It was not, and the loop is what surfaced that.
+
+Before any code, three layers of validation cycles ran across ten phases each: alignment against the master spec, then a vision gate, then a ceiling push. It settles in two or three rounds a layer. It feels slower right up until the point where you would otherwise be rewriting.
+
+---
+
+## The mistake that changed how I build
+
+I built as much as I could as fast as I could, and I paid for it at the end.
+
+At one point all seven chief of staff systems had backend services, routes, UI components and database schemas written. None of them ran. The database did not exist, nothing triggered the pipelines, and the integration wiring was incomplete. The gap between the code existing and the system working was 100% of the effort still to come.
+
+Then it got worse, because the tests were lying to me.
+
+The default test run wrote to my real production database. A unit test authored the only learned rule the product ever had, "Good morning." one hundred and thirty three times over, injected straight into my live voice instructions. The same suite placed live API calls whenever a key sat in the environment, which on a development machine is always. It did live writes against production. It could not run from a clean clone at all. Every green result I had been reading was worth nothing.
+
+Fixing that is the most useful thing this project taught me. The suite is hermetic now: keys stripped from the environment, any connection to a non-local host throws, any write outside the repo and temp throws.
+
+The harder half was everything that is not pass or fail. A morning briefing is not correct or incorrect, so I split the framework by what it grades. Deterministic assertions run offline against hand-built known-good and known-bad outputs, and the known-bads carry the weight. Each one has to trip the specific assertion it was built to catch, because a known-bad that slips through is a quality regression nobody hears about. It is an eval of the evals, and I have not built anything since without one.
+
+The last piece: a passing test was never the same claim as a right answer. The first version had thorough end-to-end coverage and produced output that did not match what I wanted. Anything touching real data now gets validated against real data.
+
+**This is the lesson I carry into every build.** Spec first, test as you go, and know which parts of the system cannot be graded by a unit test before you write one.
+
+---
+
 ## The system
 
 Four phases, one loop. Sensing feeds reasoning, reasoning drives action, and what you do with the result feeds back to raise or lower the bar for interrupting you again.

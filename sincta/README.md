@@ -14,7 +14,59 @@ I wanted dictation and could not use a cloud tool. The commercial answer sends y
 
 That is the most useful thing about this project as an engineering exercise. It removed the easy path on day one, and everything after that had to be earned.
 
+I also wanted somewhere to practise building the way I think building should work, on something I would use every day and would notice breaking. A dictation app is small enough to hold in your head and unforgiving enough to punish a shortcut, which makes it a good place to be strict.
+
 A privacy promise is worth what the instruments say it is worth. **The benches refuse to run while a routable network interface is up.**
+
+---
+
+## How I work on it
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="diagrams/gate-dark.svg">
+  <img width="520" alt="How a phase closes: a claim the phase wants to make is either machine-checkable, and goes to an automated gate whose passed count is read, or it is not, and becomes an attended sitting with a written procedure that stays recorded as owed until someone runs it." src="diagrams/gate-light.svg">
+</picture>
+
+This is the project where I applied what [Nexus](../nexus/) taught me about testing, from the first commit rather than after the damage.
+
+Ten phases so far, each behind a written gate. A phase does not close on a green suite. Before a gate there is a whole-branch review, then a read-only pass from a second model vendor, then a fix wave where every finding is written up with its mechanism and the rule taken from it.
+
+What a machine cannot produce becomes an attended sitting with a written procedure. Three of those are owed right now and none is waived: a threshold calibration for voice-activity detection on a real microphone, a kill-during-delivery test on the crash-safe spool, and the boundary matrix for hold-to-dictate. Four built features ship switched off behind flags for that reason, each with its prerequisites recorded.
+
+Gate rows for those features read implemented, not observed. That phrasing is deliberate.
+
+---
+
+## What the defect log is for
+
+The wiki carries 26 defect writeups. The phase ledgers carry more: 28 in a single overnight build, 25 in the phase after it. Each one records the mechanism and the rule taken from it.
+
+That log is not a bug list. The interesting part is almost never the defect. It is why the thing that was supposed to catch it did not.
+
+**A setting that never reached the thing it configured.** The task was to find the lowest safe flush window. The first sitting produced two clean populations of latency data, one at the default and one at the candidate. Both passed. Both were worthless, because the function constructing the native engine passed no arguments, so the addon's own constructor default decided the value regardless of the config file. Both populations had measured the same pinned number. Nothing errored and nothing warned. The fix added a readback line logging the value the bridge was configured with.
+
+Four phases later, the same defect in a different place. The vocabulary was read once at boot into a corrector that built its dictionary at construction, so a word added in the Dictionary pane would never have reached a dictation until relaunch, with every unit test green. Both are now covered by a written rule and by tests that change a setting on a live graph and assert the next dictation's delivered text changed, rather than asserting a function was called.
+
+**A check that no sequence ran, three times.** The end-to-end suite sits behind a pre-hook. While that hook was red, the suite exited before Playwright started, so a suite that never ran was indistinguishable from a passing one. It stayed that way for a whole phase, which hid that the audio cues had never worked end to end: a second sandboxed preload shared a runtime import with another preload, so the bundler split it into a chunk a sandboxed preload cannot load, and killed both.
+
+Then the same shape a third time. Four boot-proof scripts existed and nothing executed them, not the test command and not the release sequence. Two were red when a phase merged and deployed. The finding is not the stale assertion they tripped over. It is that a real check nobody runs is not a check. Reading the passed count rather than the exit code is now a runbook item, and those four scripts run together under one command that never short-circuits, with separate exit codes for "assertions failed" and "the script could not run at all".
+
+**A counter that flattered the app.** The analytics vocabulary had an outcome for a delivery that failed, and nothing in the codebase produced it. A dictation whose delivery failed counted nothing, so the Activity pane undercounted exactly the sessions a user remembers most, in the direction that makes the app look better. A closed vocabulary is a set of claims about what can happen, and a member nothing can produce is a claim with nothing behind it. Every member of both outcome vocabularies now has a producer proven by driving the real route, or a written reason for its absence, and a test fails on any member left undecided.
+
+<details>
+<summary><b>Four more from the log</b></summary>
+
+<br/>
+
+**A path resolver green through two reviews.** The addon path resolver shipped, was approved twice, and was touched by several later tasks without ever running inside a packaged bundle. Its first packaged execution threw and blocked boot. In development the addons live at one path, and packaged they land at another. The function had one code path and it happened to be right for the only environment anyone had run it in. Green code and reviewed code are not the same claim as exercised code.
+
+**A fix I dispatched and then held.** The menu bar icon rendered blank on the first packaged launch, matching a defect class this project already knew: assets inside the app archive failing to load. I dispatched a fix on that premise. Before it landed I checked the mechanism, and the image loader returned a valid non-empty image from the real archive path. The glyph was drawn at 68 of 256 alpha pixels and I simply could not see it. Had the fix landed it would have been a no-op sitting on top of an unrelated legibility problem, and it would have looked like it worked.
+
+**A window that shipped unstyled.** The main window's stylesheet consumed sixteen custom properties defined in no token file. An undefined variable reference with no fallback is invalid at computed-value time, so the declarations were dropped and the window rendered bare. Every test was green, because the tests asserted the rules existed rather than that they resolved. A guard now fails any stylesheet consuming a custom property nothing defines, and the visual layer is rebuilt against a design-parity gate whose floor rises with every case it learns.
+
+**A guard that was decorative, and only its own sabotage found it.** A test written to prove a guarantee never asserted that the condition it was about had been reached, so its subject and its verdict were independent and a pass carried no information. The rule taken from it was measured rather than argued: across six deliberately sabotaged cases, every one with an anchor asserting the condition was reached survived, and every one without it did not.
+
+</details>
 
 ---
 
@@ -91,21 +143,6 @@ Every user-changeable value in that pipeline is read live, never snapshotted at 
 
 ---
 
-## How a phase closes
-
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="diagrams/gate-dark.svg">
-  <img width="520" alt="How a phase closes: a claim the phase wants to make is either machine-checkable, and goes to an automated gate whose passed count is read, or it is not, and becomes an attended sitting with a written procedure that stays recorded as owed until someone runs it." src="diagrams/gate-light.svg">
-</picture>
-
-Ten phases so far, each behind a written gate. A phase does not close on a green suite. Before a gate there is a whole-branch review, then a read-only pass from a second model vendor, then a fix wave where every finding is written up with its mechanism and the rule taken from it.
-
-What a machine cannot produce becomes an attended sitting with a written procedure. Three of those are owed right now and none is waived: a threshold calibration for voice-activity detection on a real microphone, a kill-during-delivery test on the crash-safe spool, and the boundary matrix for hold-to-dictate. Four built features ship switched off behind flags for that reason, each with its prerequisites recorded.
-
-Gate rows for those features read implemented, not observed. That phrasing is deliberate.
-
----
-
 ## Decisions worth reading
 
 <details>
@@ -158,39 +195,6 @@ A dictation app that can synthesise arbitrary keystrokes is a different and much
 
 ---
 
-## What the defect log is for
-
-The wiki carries 26 defect writeups. The phase ledgers carry more: 28 in a single overnight build, 25 in the phase after it. Each one records the mechanism and the rule taken from it.
-
-That log is not a bug list. The interesting part is almost never the defect. It is why the thing that was supposed to catch it did not.
-
-**A setting that never reached the thing it configured.** The task was to find the lowest safe flush window. The first sitting produced two clean populations of latency data, one at the default and one at the candidate. Both passed. Both were worthless, because the function constructing the native engine passed no arguments, so the addon's own constructor default decided the value regardless of the config file. Both populations had measured the same pinned number. Nothing errored and nothing warned. The fix added a readback line logging the value the bridge was configured with.
-
-Four phases later, the same defect in a different place. The vocabulary was read once at boot into a corrector that built its dictionary at construction, so a word added in the Dictionary pane would never have reached a dictation until relaunch, with every unit test green. Both are now covered by a written rule and by tests that change a setting on a live graph and assert the next dictation's delivered text changed, rather than asserting a function was called.
-
-**A check that no sequence ran, three times.** The end-to-end suite sits behind a pre-hook. While that hook was red, the suite exited before Playwright started, so a suite that never ran was indistinguishable from a passing one. It stayed that way for a whole phase, which hid that the audio cues had never worked end to end: a second sandboxed preload shared a runtime import with another preload, so the bundler split it into a chunk a sandboxed preload cannot load, and killed both.
-
-Then the same shape a third time. Four boot-proof scripts existed and nothing executed them, not the test command and not the release sequence. Two were red when a phase merged and deployed. The finding is not the stale assertion they tripped over. It is that a real check nobody runs is not a check. Reading the passed count rather than the exit code is now a runbook item, and those four scripts run together under one command that never short-circuits, with separate exit codes for "assertions failed" and "the script could not run at all".
-
-**A counter that flattered the app.** The analytics vocabulary had an outcome for a delivery that failed, and nothing in the codebase produced it. A dictation whose delivery failed counted nothing, so the Activity pane undercounted exactly the sessions a user remembers most, in the direction that makes the app look better. A closed vocabulary is a set of claims about what can happen, and a member nothing can produce is a claim with nothing behind it. Every member of both outcome vocabularies now has a producer proven by driving the real route, or a written reason for its absence, and a test fails on any member left undecided.
-
-<details>
-<summary><b>Four more from the log</b></summary>
-
-<br/>
-
-**A path resolver green through two reviews.** The addon path resolver shipped, was approved twice, and was touched by several later tasks without ever running inside a packaged bundle. Its first packaged execution threw and blocked boot. In development the addons live at one path, and packaged they land at another. The function had one code path and it happened to be right for the only environment anyone had run it in. Green code and reviewed code are not the same claim as exercised code.
-
-**A fix I dispatched and then held.** The menu bar icon rendered blank on the first packaged launch, matching a defect class this project already knew: assets inside the app archive failing to load. I dispatched a fix on that premise. Before it landed I checked the mechanism, and the image loader returned a valid non-empty image from the real archive path. The glyph was drawn at 68 of 256 alpha pixels and I simply could not see it. Had the fix landed it would have been a no-op sitting on top of an unrelated legibility problem, and it would have looked like it worked.
-
-**A window that shipped unstyled.** The main window's stylesheet consumed sixteen custom properties defined in no token file. An undefined variable reference with no fallback is invalid at computed-value time, so the declarations were dropped and the window rendered bare. Every test was green, because the tests asserted the rules existed rather than that they resolved. A guard now fails any stylesheet consuming a custom property nothing defines, and the visual layer is rebuilt against a design-parity gate whose floor rises with every case it learns.
-
-**A guard that was decorative, and only its own sabotage found it.** A test written to prove a guarantee never asserted that the condition it was about had been reached, so its subject and its verdict were independent and a pass carried no information. The rule taken from it was measured rather than argued: across six deliberately sabotaged cases, every one with an anchor asserting the condition was reached survived, and every one without it did not.
-
-</details>
-
----
-
 ## Status
 
 Pre-alpha, in daily use, deployed to `/Applications` on one machine. Self-signed, never notarized, never distributed. A self-signed identity cannot be notarized, and the build is never quarantined or run past Gatekeeper, so it does not need to be.
@@ -221,3 +225,4 @@ I wrote very little of that by hand. I architect and direct, the model writes th
 ---
 
 <sub>Source is private. Every count and measurement on this page comes from the repository and its committed bench results, as of 18 August 2026.</sub>
+

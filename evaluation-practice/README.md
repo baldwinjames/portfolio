@@ -8,6 +8,14 @@
 
 ---
 
+## Why this page exists
+
+I built the eval training because I wanted to understand this at a far deeper level than anything I could find online. Most of what is written about evals stops at "write an eval." The part nobody covers is how to tell whether the eval itself is any good, and that turns out to be the whole game.
+
+Everything here came out of getting it wrong first. The gate that could not go red, the grader that moved twelve points on identical inputs, the four changes I was sure about. This is the practice I now bring to every build, including the ones on the other pages here.
+
+---
+
 ## The rule
 
 A gate that cannot go red is not a gate.

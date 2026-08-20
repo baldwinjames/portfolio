@@ -20,6 +20,16 @@ Before it there was no queryable memory of what customers had said. The precurso
 
 ---
 
+## What I took away from it
+
+**A playbook only counts when someone else can follow it.** Standing up a secure, cloud-hosted, authenticated internal MCP server is a multi-week minefield of deploy quirks, token formats, networking and database grants. I solved it once and wrote down every scar. The part I am proudest of has someone else's name on it: the company's data engineer built a data warehouse MCP server on the same scaffolding, and it became one of the few internal tools with real multi-user reach. Had I been the only person able to repeat it, this would have been a tool rather than a platform.
+
+**Build for other people or you will not find out whether it is any good.** 39 colleagues used this, every one of them active in the last 30 days, and I came ninth on my own tool. The CEO out-used me by roughly ten to one. That is the figure I lead with, because a tool whose author is its heaviest user has not been adopted, it has been announced.
+
+**The measurement was the hard part, not the retrieval.** Every fork in this system was settled by a deterministic suite rather than by my judgment, after I caught my own grader moving twelve points on identical inputs. The gains further down are worth something because the thing measuring them was able to go red.
+
+---
+
 ## Keeping the corpus honest
 
 A search tool is only as good as what it is searching. One of the three pipelines manufactures the post-mortem corpus, and its extraction step is where a wrong answer would be invisible: a hallucinated field does not look like an error, it looks like a record.
@@ -38,8 +48,6 @@ So extraction routes by archetype, runs deterministic signal detectors before an
 Every piece of that was a lesson paid for once. The managed agent runtime was chosen over serverless functions in a decision record. The obvious SSO vendor was tried and rejected because it issues opaque tokens rather than JWTs. Direct database driver access replaced a REST layer whose idle connections kept getting force-closed. VPC mode with a static egress IP exists so there is a single address to allowlist.
 
 The per-user attribution hook is why any adoption number on this page exists at all. It was built into the platform rather than the tool, so anything else built on the same scaffolding gets its usage data without asking.
-
-**The part I am proudest of has someone else's name on it.** The company's data engineer built a data warehouse MCP server on this scaffolding, and it became one of the few internal tools with real multi-user reach. A playbook that only its author can follow is not a playbook.
 
 One scar worth naming: the agent runtime accumulates state across in-place redeploys and eventually corrupts. After enough deploy versions the only recovery was to destroy and recreate rather than patch. That is now written down, because the next person to hit it will be looking at symptoms that suggest their code.
 
