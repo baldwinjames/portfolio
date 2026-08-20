@@ -1,8 +1,8 @@
 # Portfolio
 
-Case studies on systems I have designed and built. Most of the production work lives in private repositories owned by former employers, so what is here describes architecture, decisions and measured outcomes rather than source. Where a claim carries a number, the number came from an instrument, and I say so when it did not.
+This portfolio is a collection of things I've built while on my AI engineering journey. Some items, like Nexus, were built to help me understand how far I can push the limits on AI and expand my learning beyond the current demands of my role. Others, like the eval training, were built because I wanted to learn at a far deeper level than anything I had found online. 
 
-I ran global customer support organizations for thirteen years. In October 2025 I moved out of management to build, and everything here comes from the period since.
+The purpose of this portfolio is not just to highlight the things I've built but also to showcase the learnings along the way, explain how I approach challenges and problems and to better explain the complexities of the systems built at a greater detail than my resume could. 
 
 ## Case studies
 
