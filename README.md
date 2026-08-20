@@ -7,7 +7,7 @@ The purpose of this portfolio is not just to highlight the things I've built but
 ## Case studies
 
 | System | What it is | 
-|---|---|---|
+|---|---|
 | [Nexus](./nexus/) | A voice-first AI chief of staff. Fifteen intelligence engines across six process-context layers, deciding what needs a person and suppressing the rest. Speech on OpenAI's Realtime API, reasoning on Claude. 
 | [Sincta](./sincta/) | Privacy-first on-device dictation for macOS. Electron over two native Swift bridges. Replaces a commercial cloud tool with one that has no network path at all. 
 | [Investigation workflow](./investigation-workflow/) | An agentic workflow running the full Tier 2 support lifecycle: route, map the codebase, pull logs, check infrastructure, reach a root cause. 
